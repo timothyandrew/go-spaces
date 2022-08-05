@@ -14,8 +14,8 @@ const (
  -------------
 
  This is very basic because we only need to store two ints. The first
- 8 bytes are an int64 representing the current space, and the next 8
- bytes are an int64 representing the previous space.
+ byte is an int8 representing the current space, and the next byte is an
+ int8 representing the previous space.
 
 */
 
@@ -31,8 +31,8 @@ func setCurrentSpace(space uint) error {
 	}
 	defer f.Close()
 
-	binary.Write(f, binary.BigEndian, uint64(space))
-	binary.Write(f, binary.BigEndian, uint64(prev))
+	binary.Write(f, binary.BigEndian, uint8(space))
+	binary.Write(f, binary.BigEndian, uint8(prev))
 
 	return nil
 }
@@ -43,7 +43,7 @@ func prevSpace() (uint, error) {
 		return 0, err
 	}
 
-	return uint(binary.BigEndian.Uint64(b[8:])), nil
+	return uint(b[1]), nil
 }
 
 func currentSpace() (uint, error) {
@@ -52,5 +52,5 @@ func currentSpace() (uint, error) {
 		return 0, err
 	}
 
-	return uint(binary.BigEndian.Uint64(b[:8])), nil
+	return uint(b[0]), nil
 }
