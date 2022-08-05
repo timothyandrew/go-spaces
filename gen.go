@@ -2,6 +2,10 @@ package main
 
 import "fmt"
 
+const (
+	DELAY = 0.1
+)
+
 func diff(x, y uint) uint {
 	d := int(x) - int(y)
 	if d < 0 {
@@ -23,7 +27,7 @@ func generateSwitch(from, to uint) string {
 
 	for i := uint(0); i < diff(from, to); i++ {
 		s += fmt.Sprintf("  key code %d using (control down)\n", keyCode)
-		s += "  delay 0.1\n"
+		s += fmt.Sprintf("  delay %.1f\n", DELAY)
 	}
 
 	s += "end tell\n"
